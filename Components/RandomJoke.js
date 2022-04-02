@@ -55,14 +55,5 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 20,
   },
-  checkboxContainer: {
-    flexDirection: "row",
-  },
-  checkBox: {
-    alignSelf: "center",
-  },
-  label: {
-    margin: 8,
-  },
 });
 

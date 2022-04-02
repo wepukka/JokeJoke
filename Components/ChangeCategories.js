@@ -1,6 +1,8 @@
 import React from 'react'
 import CheckBox from 'expo-checkbox';
 import { View } from 'react-native';
+import { useState } from "react";
+
 
 export default function ChangeCategories() {
   
