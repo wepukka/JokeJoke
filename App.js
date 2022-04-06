@@ -19,16 +19,17 @@ export default function App() {
   return (
     <NavigationContainer>
     <Tab.Navigator
-    initialRouteName='Random'
+    initialRouteName='RandomJoke'
     screenOptions={{
       tabBarInactiveBackgroundColor:"#e6e6fa",
       header: TopBar 
     }}>
-    <Tab.Screen name="Random" component={RandomJoke} />
+    <Tab.Screen name="RandomJoke" component={RandomJoke} />
     <Tab.Screen name="Saved" component={Saved} />
     <Tab.Screen name="Create" component={CreateJoke} />
     </Tab.Navigator>
   </NavigationContainer>
+ 
   ) };
 
 

@@ -4,7 +4,7 @@ import { StyleSheet , Text} from 'react-native';
 
 export default function TopBar () {
   return (
-   <Appbar.Header style={styles.bottom}>
+   <Appbar.Header style={styles.container}>
      <Text style={{color:"whitesmoke", fontSize:20}}>
        JokeJoke
      </Text>
@@ -16,10 +16,8 @@ export default function TopBar () {
   )
 }
 
-
-
 const styles = StyleSheet.create({
-  bottom: {
+  container: {
     backgroundColor:"#9932cc",
     justifyContent:"space-around",
     left: 0,
