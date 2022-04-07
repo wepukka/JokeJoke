@@ -3,16 +3,11 @@ import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button, Dimensions} from "react-native";
 
-
-
-
 import renderRandom from "./RenderJoke";
-import SetupSheet from './SetupSheet';
 
 export default function RandomJoke() {
 
-  const {width,height} = Dimensions.get("screen");
-  
+
   const [type, setType] = useState("");
   const [randJson, setRandJson] = useState({});
 
@@ -41,7 +36,6 @@ export default function RandomJoke() {
       </View>
       <View style={styles.jokeContainer}>{renderRandom(type, randJson)}</View>
       <StatusBar style="auto" />
-      <SetupSheet /> 
     </View>
 
   );

@@ -1,7 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { StyleSheet, Text, View, Dimensions, Animated } from "react-native";
+
+
 import { ScrollView } from "react-native-gesture-handler";
+
 
 const {width,height} = Dimensions.get("screen")
 
@@ -25,10 +28,8 @@ const SetupSheet = (props) => {
     };
 
   return (
-    
       <Animated.View style={[styles.container, setupSheetStyle]}>
           <ScrollView style = {styles.grabber}>
-
           </ScrollView>
         <Text>Setup sheet</Text>
     </Animated.View>
