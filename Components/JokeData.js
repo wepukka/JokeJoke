@@ -22,20 +22,3 @@ export const lengthData = [
     { id : 2, text : "two part", isChecked : false},
  ];
 //
-
-export const asd = {
-    "formatVersion": 3,
-    "category": "Misc",
-    "type": "single",
-    "joke": "",
-    "flags": {
-         id : 1, text : "Programming", isChecked : false,
-         id : 2, text : "Miscellaneous", isChecked : false,
-         id : 3, text : "Dark", isChecked : false,
-         id : 4, text : "Pun", isChecked : false,
-         id : 5, text : "Spooky", isChecked : false,
-         id : 6, text : "Christmas", isChecked : false,
-    
-    },
-    "lang": "en"
-}
