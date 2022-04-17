@@ -3,12 +3,14 @@ import { Text, View, StyleSheet, FlatList, Button } from "react-native";
 import Checkbox from "expo-checkbox";
 import { Card } from "react-native-paper";
 
+// Props sendData={saveJokeData} from RandomJoke
 export default function CheckBoxes(props) {
 
   const [data1, setData1] = useState(props.data1);
   const [data2, setData2] = useState(props.data2);
   const [data3, setData3] = useState(props.data3);
 
+  // Handle checkbox change, save to state
   const handleChange = (id, data, type) => {
     let temp = data.map((data) => {
       if (id === data.id) {
@@ -27,7 +29,7 @@ export default function CheckBoxes(props) {
     }
   };
 
-  // Params object array and type, either "flags", "categories" or "length"
+  //  
   const renderFlatList = (renderData, type) => {
     return (
       <View>
@@ -60,13 +62,14 @@ export default function CheckBoxes(props) {
     );
   };
 
+  // View with 3 flatlist elements // 
   return (
     <View style={styles.container}>
       <View style={styles.heightDivider}>
         <View style={styles.childContainer}>
           <View style={styles.checkContainer}>
             <Text
-              style={{ alignSelf: "center", marginBottom: 10, marginTop: 20 }}
+              style={{ alignSelf: "center", marginBottom: 10, marginTop: 20, fontSize:15 }}
             >
               Categories
             </Text>
@@ -77,7 +80,7 @@ export default function CheckBoxes(props) {
 
           <View style={styles.checkContainer}>
             <Text
-              style={{ alignSelf: "center", marginBottom: 10, marginTop: 20 }}
+              style={{ alignSelf: "center", marginBottom: 10, marginTop: 20, fontSize:15 }}
             >
               Blacklist
             </Text>
@@ -87,7 +90,7 @@ export default function CheckBoxes(props) {
       </View>
 
       <View style={styles.jokeLength}>
-        <Text style={{ alignSelf: "center", marginBottom: 10 }}>Length</Text>
+        <Text style={{ alignSelf: "center", marginBottom: 10, fontSize:15 }}>Length</Text>
         <View style={{ flex: 1 }}>{renderFlatList(data3, "data3")}</View>
       </View>
       <Button title="Save" onPress={() => props.sendData(data1, data2, data3) } />

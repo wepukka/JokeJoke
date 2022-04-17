@@ -1,12 +1,14 @@
-const mapUrl = (categories, flags, length) => {
-
-  let categoryList = [];
-  let categoryUrl = "";
+export default function UrlChange (categories,flags,length) {
 
   let flagList = [];
   let flagUrl = "";
 
   let lengthUrl = "";
+  
+  const mapCategories = () => {
+
+  let categoryList = [];
+  let categoryUrl = "";
 
   // CATEGORIES
   categories.map((data) => {
@@ -20,6 +22,8 @@ const mapUrl = (categories, flags, length) => {
   } else {
     categoryUrl = "Any";
   }
+  return categoryUrl
+}
 
   // FLAGS
   flags.map((data) => {
@@ -38,12 +42,10 @@ const mapUrl = (categories, flags, length) => {
   }
 
   if (flagList.length > 0) {
-    flagUrl = "?blacklistFlag=" + flagList.join(",");
+    flagUrl = "?blacklistFlags=" + flagList.join(",");
     lengthUrl = lengthUrl.replace("?", "&");
   }
 
-  let url = categoryUrl + flagUrl + lengthUrl;
-  console.log(url);
+  let categoryUrl = mapCategories()
+  return "https://v2.jokeapi.dev/joke/"+ categoryUrl + flagUrl + lengthUrl;
 };
-
-export default mapUrl;
