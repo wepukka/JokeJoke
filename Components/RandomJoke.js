@@ -48,7 +48,7 @@ export default function RandomJoke() {
   const [url, setUrl] = useState("https://v2.jokeapi.dev/joke/Any");
 
   // Change url if categories CATEGORIES, FLAGS or LENGTH changes
-  useEffect(async () => {
+  useEffect(() => {
     let newUrl = UrlChange(categories, flags, length);
     setUrl(newUrl);
   }, [categories, flags, length]);
