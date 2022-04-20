@@ -3,17 +3,44 @@ import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button } from "react-native";
 import BottomSheet from "react-native-gesture-bottom-sheet";
+import * as SQLite from 'expo-sqlite'
 
 // Components & Data
 
 import UrlChange from "./UrlChange";
 import CheckBoxes from "./CheckBoxes";
 import renderRandom from "./RenderJoke";
-import { flagsData, categoriesData, lengthData, asd } from "./JokeData";
+import { flagsData, categoriesData, lengthData } from "./JokeData";
 
-export default function RandomJoke() {
+export default function RandomJoke(props) {
+
+  const db = SQLite.openDatabase('jokes.db')
+
+  useEffect(() => {
+    db.transaction(tx => {
+      tx.executeSql('create table if not exists jokes (id integer primary key not null, joke text, category text, type text);');
+    });
+    updateList();
+  }, []);
+
+  const savejoke = () => {
+    db.transaction(tx => {
+      tx.executeSql('insert into jokes (joke, category, type) values (?,?,?);',
+      ["asasd","asdasd","asdasd"], );
+    }, null, updateList)
+  }
+
+  const updateList = () => {
+    db.transaction(tx => {
+      tx.executeSql('select * from jokes;', [], (_, {rows}) =>
+        setJoke(rows._array)
+    )
+    }, null, null)
+  }
+
+
   const [type, setType] = useState("");
-  const [randJson, setRandJson] = useState({});
+  const [joke, setJoke] = useState({});
 
   const [categories, setCategories] = useState(categoriesData);
   const [flags, setFlags] = useState(flagsData);
@@ -44,6 +71,23 @@ export default function RandomJoke() {
     );
   };
 
+  const renderCategoryType = () => {
+    if (joke.category == undefined || joke.type == undefined) {
+      return (
+        <View>
+          <Text> {"Category: "}</Text>
+          <Text> {"Type: "}</Text>
+        </View>
+      );
+    }
+    return (
+      <View>
+        <Text> {"Category: " + joke.category}</Text>
+        <Text> {"Type: " + joke.type}</Text>
+      </View>
+    );
+  };
+
   // Random jokes with no "dark" & "miscellaneous" due to harshness of some jokes //
   const [url, setUrl] = useState("https://v2.jokeapi.dev/joke/Any");
 
@@ -57,7 +101,7 @@ export default function RandomJoke() {
     try {
       let response = await fetch(url);
       let data = await response.json();
-      setRandJson(data);
+      setJoke(data);
       setType(data.type);
       console.log(url);
     } catch (error) {
@@ -67,12 +111,25 @@ export default function RandomJoke() {
 
   return (
     <View style={styles.container}>
-      <Text style={{ color: "blue", fontSize: 24 }}>JokeJoke</Text>
-      <View style={styles.buttonContainer}>
-        <Button title="Random" onPress={fetchRandomJoke} />
-        <Button title="Settings" onPress={() => bottomSheet.current.show()} />
+      <View style={styles.jokeInfo}>
+        <View style={styles.info}>
+          <Text>SAVE STATUS</Text>
+        </View>
+        <View style={styles.jokeData}>{renderCategoryType()}</View>
       </View>
-      <View style={styles.jokeContainer}>{renderRandom(type, randJson)}</View>
+      <View style={styles.jokeContainer}>{renderRandom(type, joke)}</View>
+      <View style={styles.upperButtonStyle}>
+        <Button title="Joke" onPress={fetchRandomJoke} />
+      </View>
+
+      <View style={{ flexDirection: "row" }}>
+        <View style={styles.lowerButtonStyle}>
+          <Button title="Settings" onPress={() => bottomSheet.current.show()} />
+        </View>
+        <View style={styles.lowerButtonStyle}>
+          <Button title="Save Joke" onPress={() => {savejoke()} } />
+        </View>
+      </View>
       <Sheet />
       <StatusBar style="auto" />
     </View>
@@ -85,13 +142,34 @@ const styles = StyleSheet.create({
     backgroundColor: "whitesmoke",
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "column",
+  },
+  jokeInfo: {
+    padding: 8,
+    flexDirection: "row",
+    width: "80%",
+  },
+  jokeData: { flex: 1 },
+  info: {
+    flex: 1,
   },
   jokeContainer: {
-    marginTop: 20,
     alignItems: "center",
     justifyContent: "center",
+    width: "90%",
+    height: "55%",
+    backgroundColor: "grey",
+    marginBottom: 10,
+    marginTop: 10,
   },
-  buttonContainer: {
-    marginTop: 20,
+  upperButtonStyle: {
+    flexDirection: "column",
+    marginBottom: 30,
+    width: "30%",
+    backgroundColor: "grey",
+  },
+  lowerButtonStyle: {
+    marginLeft: 20,
+    width: "30%",
   },
 });

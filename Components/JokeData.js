@@ -11,10 +11,10 @@ export const flagsData = [
 export  const categoriesData = [
     { id : 1, text : "Programming", isChecked : false},
     { id : 2, text : "Miscellaneous", isChecked : false},
-    { id : 3, text : "Dark", isChecked : false},
-    { id : 4, text : "Pun", isChecked : false},
-    { id : 5, text : "Spooky", isChecked : false},
-    { id : 6, text : "Christmas", isChecked : false},
+    { id : 3, text : "Pun", isChecked : false},
+    { id : 4, text : "Spooky", isChecked : false},
+    { id : 5, text : "Christmas", isChecked : false},
+    { id : 6, text : "Dark", isChecked : false},
  ];
 
 export const lengthData = [

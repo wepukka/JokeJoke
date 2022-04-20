@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, FlatList, Button } from "react-native";
 import Checkbox from "expo-checkbox";
 import { Card } from "react-native-paper";
 
-// Props sendData={saveJokeData} from RandomJoke
+// Props data for all rendered flatlist and save function
 export default function CheckBoxes(props) {
 
   const [data1, setData1] = useState(props.data1);

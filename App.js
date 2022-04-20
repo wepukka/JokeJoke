@@ -8,7 +8,6 @@ import { Appbar } from 'react-native-paper';
 import Saved from './Components/Saved';
 import RandomJoke from './Components/RandomJoke';
 import CreateJoke from './Components/CreateJoke';
-import CheckBoxes from './Components/CheckBoxes';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,7 +32,7 @@ const topBar = ({route}) => {
       tabBarInactiveBackgroundColor:"#e6e6fa",
       header: topBar
     }}>
-    <Tab.Screen name="RandomJoke" component={RandomJoke} />
+    <Tab.Screen name="RandomJoke" component={RandomJoke}/>
     <Tab.Screen name="Your jokes" component={Saved} />
     <Tab.Screen name="New Joke" component={CreateJoke} />
    
