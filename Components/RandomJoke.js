@@ -12,7 +12,7 @@ import CheckBoxes from "./CheckBoxes";
 import renderRandom from "./RenderJoke";
 import { flagsData, categoriesData, lengthData } from "./JokeData";
 
-export default function RandomJoke(props) {
+export default function RandomJoke() {
 
   const db = SQLite.openDatabase('jokes.db')
 
