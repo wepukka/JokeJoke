@@ -1,3 +1,5 @@
+
+
 // FOR FETCH
 export const flagsData = [ 
     { id: 1, text: "Nsfw", isChecked: false },
@@ -21,4 +23,16 @@ export const lengthData = [
     { id : 1, text : "single", isChecked : false},
     { id : 2, text : "two part", isChecked : false},
  ];
-//
+
+// IMAGES FOR CATEGORIES 
+/*
+export const images = [
+    { id : 1, image: programming},
+    { id : 2, image: miscellaneous},
+    { id : 3, image: pun},
+    { id : 4, image: spook},
+    { id : 5, image: christmas},
+    { id : 6, image: dark},
+];
+
+*/

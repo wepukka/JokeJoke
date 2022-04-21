@@ -1,11 +1,7 @@
 import React, {useEffect, useState} from 'react'
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-
 import * as SQLite from 'expo-sqlite'
-import { StyleSheet, Text, View , FlatList} from 'react-native';
+import { StyleSheet, Text, View , FlatList, addons} from 'react-native';
 
 
 // SQLITE UPDATES RENDER  ONLY WHEN RESTARTING PROGRAM // 
@@ -37,10 +33,6 @@ export default function Saved({navigation}) {
       tx.executeSql('delete from jokes where id = ?;', [id]);}, null, updateList)
     }
 
-    const selectItem = (id) => {
-      console.log(id)
-    }
-
     return (
       <View style={styles.container}>
        <FlatList
@@ -52,7 +44,8 @@ export default function Saved({navigation}) {
         renderItem={({item}) => 
 
        <View style={styles.list}>
-        <Text style={{fontSize:20, color:"blue" }} onPress={() => navigation.navigate('')}> {item.id} { item.joke.split(" ").slice(0,2).join(" ")} {"("+item.category+ ", " + item.type +")"} </Text>
+        <Text style={{fontSize:20, color:"blue" }} onPress={() => navigation.navigate('Selected', {joke: item})}> {item.id+"."} { item.joke.split(" ").slice(0,2).join(" ")}</Text>
+
         <Text style={{color:"red", fontSize:20}} onPress={() => deleteItem(item.id)}>{"DELETE"}{"\n"} </Text>
         </View>}
         />  
