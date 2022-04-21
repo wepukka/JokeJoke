@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import { StyleSheet, Text, } from 'react-native';
 import { NavigationContainer, TabActions, } from '@react-navigation/native';
 
@@ -8,10 +8,23 @@ import { Appbar } from 'react-native-paper';
 import Saved from './Components/Saved';
 import RandomJoke from './Components/RandomJoke';
 import CreateJoke from './Components/CreateJoke';
+import * as SQLite from 'expo-sqlite'
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  
+  const db = SQLite.openDatabase('jokes.db')
+
+  useEffect(() => {
+    db.transaction(tx => {
+      tx.executeSql('create table if not exists jokes (id integer primary key not null, joke text, category text, type text);');
+    });
+
+
+    console.log("UseEffect on Start")
+  }, []);
+
 
 const topBar = ({route}) => { 
   return(
@@ -27,7 +40,6 @@ const topBar = ({route}) => {
   return (
     <NavigationContainer>
     <Tab.Navigator
-    initialRouteName='RandomJoke'
     screenOptions={{
       tabBarInactiveBackgroundColor:"#e6e6fa",
       header: topBar
@@ -35,7 +47,6 @@ const topBar = ({route}) => {
     <Tab.Screen name="RandomJoke" component={RandomJoke}/>
     <Tab.Screen name="Your jokes" component={Saved} />
     <Tab.Screen name="New Joke" component={CreateJoke} />
-   
     </Tab.Navigator>
   </NavigationContainer>
   )};

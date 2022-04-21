@@ -6,7 +6,6 @@ import BottomSheet from "react-native-gesture-bottom-sheet";
 import * as SQLite from 'expo-sqlite'
 
 // Components & Data
-
 import UrlChange from "./UrlChange";
 import CheckBoxes from "./CheckBoxes";
 import renderRandom from "./RenderJoke";
@@ -14,51 +13,37 @@ import { flagsData, categoriesData, lengthData } from "./JokeData";
 
 export default function RandomJoke() {
 
+  // SAVE JOKE TO DB
   const db = SQLite.openDatabase('jokes.db')
 
-  useEffect(() => {
-    db.transaction(tx => {
-      tx.executeSql('create table if not exists jokes (id integer primary key not null, joke text, category text, type text);');
-    });
-    updateList();
-  }, []);
-
   const savejoke = () => {
+    let tempJoke;
+    
+    if(joke.type == "single") { 
+      tempJoke = joke.joke
+    }
+    else {
+      tempJoke = joke.setup + "\n\n" +  joke.delivery
+    }
+    setSaveStatus("SAVED")
+
     db.transaction(tx => {
       tx.executeSql('insert into jokes (joke, category, type) values (?,?,?);',
-      ["asasd","asdasd","asdasd"], );
-    }, null, updateList)
+      [tempJoke,joke.category,joke.type], );
+    }, null)
   }
 
-  const updateList = () => {
-    db.transaction(tx => {
-      tx.executeSql('select * from jokes;', [], (_, {rows}) =>
-        setJoke(rows._array)
-    )
-    }, null, null)
-  }
-
-
-  const [type, setType] = useState("");
   const [joke, setJoke] = useState({});
-
   const [categories, setCategories] = useState(categoriesData);
   const [flags, setFlags] = useState(flagsData);
   const [length, setLength] = useState(lengthData);
+  const [saveStatus, setSaveStatus] = useState("")
 
   // bottomsheet location value
   const bottomSheet = useRef();
 
-  // save data, close sheet
-  const saveJokeData = (categories, flags, length) => {
-    setCategories(categories);
-    setFlags(flags);
-    setLength(length);
-
-    bottomSheet.current.close();
-  };
-
-  const Sheet = () => {
+// bottomSheet for fetch settings
+  const SetupSheet = () => {
     return (
       <BottomSheet hasDraggableIcon ref={bottomSheet} height={600}>
         <CheckBoxes
@@ -71,6 +56,16 @@ export default function RandomJoke() {
     );
   };
 
+   // save data, close sheet
+   const saveJokeData = (categories, flags, length) => {
+    setCategories(categories);
+    setFlags(flags);
+    setLength(length);
+
+    bottomSheet.current.close();
+  };
+
+  // Prolly get rid of
   const renderCategoryType = () => {
     if (joke.category == undefined || joke.type == undefined) {
       return (
@@ -88,7 +83,7 @@ export default function RandomJoke() {
     );
   };
 
-  // Random jokes with no "dark" & "miscellaneous" due to harshness of some jokes //
+  // Default url
   const [url, setUrl] = useState("https://v2.jokeapi.dev/joke/Any");
 
   // Change url if categories CATEGORIES, FLAGS or LENGTH changes
@@ -102,8 +97,7 @@ export default function RandomJoke() {
       let response = await fetch(url);
       let data = await response.json();
       setJoke(data);
-      setType(data.type);
-      console.log(url);
+      setSaveStatus("")
     } catch (error) {
       console.log(error);
     }
@@ -113,11 +107,11 @@ export default function RandomJoke() {
     <View style={styles.container}>
       <View style={styles.jokeInfo}>
         <View style={styles.info}>
-          <Text>SAVE STATUS</Text>
+          <Text>{saveStatus}</Text>
         </View>
         <View style={styles.jokeData}>{renderCategoryType()}</View>
       </View>
-      <View style={styles.jokeContainer}>{renderRandom(type, joke)}</View>
+      <View style={styles.jokeContainer}>{renderRandom(joke.type, joke)}</View>
       <View style={styles.upperButtonStyle}>
         <Button title="Joke" onPress={fetchRandomJoke} />
       </View>
@@ -130,7 +124,7 @@ export default function RandomJoke() {
           <Button title="Save Joke" onPress={() => {savejoke()} } />
         </View>
       </View>
-      <Sheet />
+      <SetupSheet />
       <StatusBar style="auto" />
     </View>
   );

@@ -1,22 +1,28 @@
 import React, {useEffect, useState} from 'react'
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+
 import * as SQLite from 'expo-sqlite'
-import { StyleSheet, Text, View, Button , FlatList} from 'react-native';
+import { StyleSheet, Text, View , FlatList} from 'react-native';
+
 
 // SQLITE UPDATES RENDER  ONLY WHEN RESTARTING PROGRAM // 
-export default function Saved() {
+export default function Saved({navigation}) {
+
+  const [joke, setJoke] = useState(joke)
 
   const db = SQLite.openDatabase('jokes.db')
 
-  const [joke, setJoke] = useState(joke)
-  const [category, setCategory] = useState(category)
-  const [type, setType] = useState(type)
-
   useEffect(() => {
-    db.transaction(tx => {
-      tx.executeSql('create table if not exists jokes (id integer primary key not null, joke text, category text, type text);');
+    // useEffect triggers when component activates
+    const unsubscribe = navigation.addListener('focus', () => {
+        console.log('UseEffect Saved.js')
+        updateList()
     });
-    updateList();
-  }, []);
+    return unsubscribe;
+}, [navigation]);
 
   const updateList = () => {
     db.transaction(tx => {
@@ -31,17 +37,23 @@ export default function Saved() {
       tx.executeSql('delete from jokes where id = ?;', [id]);}, null, updateList)
     }
 
+    const selectItem = (id) => {
+      console.log(id)
+    }
+
     return (
       <View style={styles.container}>
-
        <FlatList
+       showsVerticalScrollIndicator={false}
+       showsHorizontalScrollIndicator={false}
         style={{marginTop:20}}
         data={joke}
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => 
+
        <View style={styles.list}>
-        <Text style={{fontSize:20}}> {item.joke}, {item.category} </Text>
-        <Text style={{color:"red", fontSize:20}} onPress={() => deleteItem(item.id)}>Delete</Text>
+        <Text style={{fontSize:20, color:"blue" }} onPress={() => navigation.navigate('')}> {item.id} { item.joke.split(" ").slice(0,2).join(" ")} {"("+item.category+ ", " + item.type +")"} </Text>
+        <Text style={{color:"red", fontSize:20}} onPress={() => deleteItem(item.id)}>{"DELETE"}{"\n"} </Text>
         </View>}
         />  
       </View>
@@ -50,15 +62,16 @@ export default function Saved() {
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      marginTop: 50,
-      backgroundColor: '#fff',
+      flex:1,
       justifyContent:"center",
-      alignItems: "center"
+      alignItems: "center",
+      marginTop: 20,
     },
     list: {
       flexDirection:"row",
-      justifyContent:"center",
-      marginTop:5
-    }
+      justifyContent:"space-between",
+      marginTop:5,
+      alignItems:"center" ,
+      backgroundColor:"whitesmoke"
+    },
   });
