@@ -1,8 +1,7 @@
 # JokeApp
 Expo built React Native application where u can fetch jokes, save to sql database and send post requests to public API
 
-Current Progress:
+# Current Progress
+<img src="assets/JokeJokeSettings.png" alt="settings" width="150"/> <img src="assets/JokeJokeListing.png" alt="listing" width="150"/>
 
-Sheet where to change categories
-<img src="assets/JokeJokeSettings.png" alt="drawing" width="150"/>
 #
