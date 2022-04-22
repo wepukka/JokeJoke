@@ -1,11 +1,10 @@
 
 import React, {useEffect} from 'react';
-import { StyleSheet, Text, } from 'react-native';
-import { NavigationContainer, TabActions, } from '@react-navigation/native';
+
+import { NavigationContainer} from '@react-navigation/native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from'@react-navigation/bottom-tabs';
-import { Appbar } from 'react-native-paper';
 import * as SQLite from 'expo-sqlite'
 
 // Components 
@@ -23,15 +22,20 @@ export default function App() {
 
   useEffect(() => {
     db.transaction(tx => {
-      tx.executeSql('create table if not exists jokes (id integer primary key not null, joke text, category text, type text);');
+      tx.executeSql('create table if not exists jokes (id integer primary key not null, joke text, category text, type text, imageid integer);');
     });
-    console.log("UseEffect on Start")
+    console.log("Create database on Start")
   }, []);
 
   const TabNav = () => { return ( <Tab.Navigator
+  
     screenOptions={{
+      tabBarShowLabel:false,
+      tabBarInactiveBackgroundColor:`whitesmoke`,
+      tabBarActiveBackgroundColor:`#b8860b`,
+      inactiveTintColor: "grey",
       headerStyle: {
-        backgroundColor: '#f4511e',
+        backgroundColor: `#b8860b`,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -47,9 +51,11 @@ export default function App() {
  
   return (
     <NavigationContainer>
+     
       <Stack.Navigator screenOptions={{
+         
         headerStyle: {
-          backgroundColor: '#f4511e',
+          backgroundColor: `#b8860b`,
         },
         headerTintColor: '#fff',
         headerTitleStyle: {

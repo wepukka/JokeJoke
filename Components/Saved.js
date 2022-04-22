@@ -1,15 +1,32 @@
 import React, {useEffect, useState} from 'react'
+import pun from "./Data/Pun.png"
+import christmas from "./Data/Christmas.png"
+import dark from "./Data/Dark.png"
+import programming from "./Data/Programming.png"
+import spooky from "./Data/Spooky.png"
+import miscellaneous from "./Data/Miscellaneous.png"
+
 
 import * as SQLite from 'expo-sqlite'
-import { StyleSheet, Text, View , FlatList, addons} from 'react-native';
-
+import { StyleSheet, Text, View , FlatList, Image, Button} from 'react-native';
 
 // SQLITE UPDATES RENDER  ONLY WHEN RESTARTING PROGRAM // 
 export default function Saved({navigation}) {
+  const db = SQLite.openDatabase('jokes.db')
+
+  
+  const images = [
+    { id : 1, text: "Programming", image: programming},
+    { id : 2, text: "Misc", image: miscellaneous},
+    { id : 3, text: "Pun", image: pun},
+    { id : 4, text: "Spooky", image: spooky},
+    { id : 5, text: "Christmas", image: christmas},
+    { id : 6, text: "Dark", image: dark},
+  ]
 
   const [joke, setJoke] = useState(joke)
 
-  const db = SQLite.openDatabase('jokes.db')
+ 
 
   useEffect(() => {
     // useEffect triggers when component activates
@@ -38,15 +55,15 @@ export default function Saved({navigation}) {
        <FlatList
        showsVerticalScrollIndicator={false}
        showsHorizontalScrollIndicator={false}
-        style={{marginTop:20}}
         data={joke}
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => 
-
        <View style={styles.list}>
-        <Text style={{fontSize:20, color:"blue" }} onPress={() => navigation.navigate('Selected', {joke: item})}> {item.id+"."} { item.joke.split(" ").slice(0,2).join(" ")}</Text>
-
-        <Text style={{color:"red", fontSize:20}} onPress={() => deleteItem(item.id)}>{"DELETE"}{"\n"} </Text>
+        <Text style={{fontSize:20, color:"black", flex:1}} onPress={() => 
+          navigation.navigate('Selected', {joke: item})}>  { item.joke.split(" ").slice(0,2).join(" ")}</Text>
+        <Button  title="DELETE" onPress={() => deleteItem(item.id)}>{"DELETE"}{"\n"} </Button>
+        {/*Images[0] == imageid 1 */ }
+        <Image style={styles.images} source={images[(item.imageid)-1].image}></Image>
         </View>}
         />  
       </View>
@@ -55,16 +72,17 @@ export default function Saved({navigation}) {
 
   const styles = StyleSheet.create({
     container: {
-      flex:1,
-      justifyContent:"center",
-      alignItems: "center",
-      marginTop: 20,
+   backgroundColor:`#deb887`
     },
     list: {
       flexDirection:"row",
-      justifyContent:"space-between",
       marginTop:5,
-      alignItems:"center" ,
-      backgroundColor:"whitesmoke"
+      alignItems:"center",
+      backgroundColor:"whitesmoke",
+    },
+    images: {
+      width: 50,
+      height: 50,
+      marginLeft:20
     },
   });

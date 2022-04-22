@@ -1,7 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
-
-import * as SQLite from "expo-sqlite";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function SelectedJoke({ route }) {
   const { joke } = route.params;

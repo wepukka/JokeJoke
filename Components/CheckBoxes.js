@@ -36,7 +36,9 @@ export default function CheckBoxes(props) {
         <FlatList
           data={renderData}
           renderItem={({ item }) => (
-            <Card style={{ margin: 3 }}>
+            <Card onPress={() => {
+              handleChange(item.id,renderData,type)
+            }} style={{ margin: 3 }}>
               <View style={styles.card}>
                 <View
                   style={{
@@ -48,9 +50,7 @@ export default function CheckBoxes(props) {
                   <Checkbox
                     value={item.isChecked}
                     color="purple"
-                    onValueChange={() => {
-                      handleChange(item.id, renderData, type);
-                    }}
+                  
                   />
                   <Text>{item.text}</Text>
                 </View>
@@ -69,7 +69,7 @@ export default function CheckBoxes(props) {
         <View style={styles.childContainer}>
           <View style={styles.checkContainer}>
             <Text
-              style={{ alignSelf: "center", marginBottom: 10, marginTop: 20, fontSize:15 }}
+              style={{ alignSelf: "center", marginBottom: 10, marginTop: 0, fontSize:15 }}
             >
               Categories
             </Text>
@@ -80,7 +80,7 @@ export default function CheckBoxes(props) {
 
           <View style={styles.checkContainer}>
             <Text
-              style={{ alignSelf: "center", marginBottom: 10, marginTop: 20, fontSize:15 }}
+              style={{ alignSelf: "center", marginBottom: 10, marginTop: 0, fontSize:15 }}
             >
               Blacklist
             </Text>
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   heightDivider: {
-    height: "70%",
+    height: "65%",
   },
   childContainer: {
     flex: 1,
@@ -124,12 +124,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "70%",
     alignSelf: "center",
-    justifyContent: "space-around",
+  
   },
   card: {
     padding: 8,
     margin: 5,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    
+ 
   },
 });

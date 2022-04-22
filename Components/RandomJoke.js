@@ -9,7 +9,7 @@ import * as SQLite from 'expo-sqlite'
 import UrlChange from "./UrlChange";
 import CheckBoxes from "./CheckBoxes";
 import renderRandom from "./RenderJoke";
-import { flagsData, categoriesData, lengthData } from "./JokeData";
+import { flagsData, categoriesData, lengthData } from "./Data/JokeData";
 
 export default function RandomJoke() {
 
@@ -17,6 +17,13 @@ export default function RandomJoke() {
   const db = SQLite.openDatabase('jokes.db')
 
   const savejoke = () => {
+    let imageId;
+    categoriesData.map((category) => {
+      if(category.text == joke.category) {
+        imageId = category.id
+      }
+    })
+    console.log(joke.category)
     let tempJoke;
     
     if(joke.type == "single") { 
@@ -26,10 +33,9 @@ export default function RandomJoke() {
       tempJoke = joke.setup + "\n\n" +  joke.delivery
     }
     setSaveStatus("SAVED")
-
     db.transaction(tx => {
-      tx.executeSql('insert into jokes (joke, category, type) values (?,?,?);',
-      [tempJoke,joke.category,joke.type], );
+      tx.executeSql('insert into jokes (joke, category, type, imageid) values (?,?,?,?);',
+      [tempJoke,joke.category,joke.type, imageId], );
     }, null)
   }
 
@@ -67,18 +73,16 @@ export default function RandomJoke() {
 
   // Prolly get rid of
   const renderCategoryType = () => {
-    if (joke.category == undefined || joke.type == undefined) {
+    if (joke.category == undefined ) {
       return (
         <View>
-          <Text> {"Category: "}</Text>
-          <Text> {"Type: "}</Text>
+          <Text style={{fontSize:15}}> {"Category:" +  "?"}</Text>
         </View>
       );
     }
     return (
       <View>
-        <Text> {"Category: " + joke.category}</Text>
-        <Text> {"Type: " + joke.type}</Text>
+        <Text style={{fontSize:16}}> {"Category: " + joke.category}</Text>
       </View>
     );
   };
@@ -97,6 +101,7 @@ export default function RandomJoke() {
       let response = await fetch(url);
       let data = await response.json();
       setJoke(data);
+    
       setSaveStatus("")
     } catch (error) {
       console.log(error);
@@ -133,7 +138,7 @@ export default function RandomJoke() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "whitesmoke",
+    backgroundColor: `#deb887`,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
@@ -152,7 +157,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "90%",
     height: "55%",
-    backgroundColor: "grey",
     marginBottom: 10,
     marginTop: 10,
   },

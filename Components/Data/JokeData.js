@@ -1,4 +1,10 @@
 
+import pun from "./Pun.png"
+import christmas from "./Christmas.png"
+import dark from "./Dark.png"
+import programming from "./Programming.png"
+import spooky from "./Spooky.png"
+import miscellaneous from "./Miscellaneous.png"
 
 // FOR FETCH
 export const flagsData = [ 
@@ -10,9 +16,9 @@ export const flagsData = [
     { id: 6, text: "Explicit", isChecked: false },
 ];
 
-export  const categoriesData = [
+export const categoriesData = [
     { id : 1, text : "Programming", isChecked : false},
-    { id : 2, text : "Miscellaneous", isChecked : false},
+    { id : 2, text : "Misc", isChecked : false},
     { id : 3, text : "Pun", isChecked : false},
     { id : 4, text : "Spooky", isChecked : false},
     { id : 5, text : "Christmas", isChecked : false},
@@ -24,15 +30,3 @@ export const lengthData = [
     { id : 2, text : "two part", isChecked : false},
  ];
 
-// IMAGES FOR CATEGORIES 
-/*
-export const images = [
-    { id : 1, image: programming},
-    { id : 2, image: miscellaneous},
-    { id : 3, image: pun},
-    { id : 4, image: spook},
-    { id : 5, image: christmas},
-    { id : 6, image: dark},
-];
-
-*/
