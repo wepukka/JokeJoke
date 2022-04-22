@@ -4,5 +4,5 @@ Expo built React Native application where u can fetch jokes, save to sql databas
 Current Progress:
 
 Sheet where to change categories
-![Fetch Settings](assets/JokeJokeSettings.png)
+<img src="assets/JokeJokeSettings.png" alt="drawing" width="150"/>
 #
