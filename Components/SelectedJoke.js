@@ -6,15 +6,21 @@ export default function SelectedJoke({ route }) {
 
   return (
     <View style={styles.container}>
-      <View styles={styles.middle}>
+      <View style={styles.infoContainer}>
+        <View style={{flexDirection:"row"}}>
+        <View>
+        <Text>Joke ID</Text>
+        </View>
+        <View>
         <Text>{joke.id}</Text>
+        </View>
+      </View>
         <Text>{joke.category}</Text>
         <Text>{joke.type}</Text>
-
-        <Text>asd</Text>
       </View>
-      <View styles={styles.joke}>
-        <Text>{joke.joke}</Text>
+
+      <View style={styles.jokeContainer}>
+      <Text>{joke.joke}</Text>
       </View>
     </View>
   );
@@ -23,17 +29,20 @@ export default function SelectedJoke({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "whitesmoke",
+    backgroundColor:`#deb887`,
     alignItems: "center",
     justifyContent: "center",
   },
-  joke: {
+  infoContainer:{
     flex: 1,
-    marginBottom: 20,
+    backgroundColor:"grey",
+    alignItems:"center",
+    justifyContent:"center",
   },
-  middle: {
-    flex: 1,
-    marginBottom: 20,
-    marginTop: 20,
+  jokeContainer: {
+    flex: 2,
+    backgroundColor:"whitesmoke",
+    alignItems:"center",
+    justifyContent:"center",
   },
 });

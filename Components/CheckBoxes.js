@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet, FlatList, Button } from "react-native";
 import Checkbox from "expo-checkbox";
 import { Card } from "react-native-paper";
+import CustomButton from "./Buttons";
 
 // Props data for all rendered flatlist and save function
 export default function CheckBoxes(props) {
@@ -65,8 +66,7 @@ export default function CheckBoxes(props) {
   // View with 3 flatlist elements // 
   return (
     <View style={styles.container}>
-      <View style={styles.heightDivider}>
-        <View style={styles.childContainer}>
+        <View style={styles.topContainer}>
           <View style={styles.checkContainer}>
             <Text
               style={{ alignSelf: "center", marginBottom: 10, marginTop: 0, fontSize:15 }}
@@ -87,13 +87,18 @@ export default function CheckBoxes(props) {
             <View style={{ flex: 1 }}>{renderFlatList(data2, "data2")}</View>
           </View>
         </View>
+      <View style={styles.bottomContainer}>
+        <View style={{flexDirection:"row"}}>
+        <View style={{ flex: 2}}>
+        <Text style={{alignSelf:"center",marginBottom: 10, fontSize:15 }}>Length</Text>
+        {renderFlatList(data3, "data3")}
+        </View>
+        <View style={{flex: 1, marginTop: 25, padding: 30}}>
+          <CustomButton title="OK" onPress={() => props.sendData(data1, data2, data3) } /> 
+          </View>
+        </View>
       </View>
-
-      <View style={styles.jokeLength}>
-        <Text style={{ alignSelf: "center", marginBottom: 10, fontSize:15 }}>Length</Text>
-        <View style={{ flex: 1 }}>{renderFlatList(data3, "data3")}</View>
-      </View>
-      <Button title="Save" onPress={() => props.sendData(data1, data2, data3) } />
+ 
     </View>
   );
 }
@@ -102,17 +107,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ecf0f1",
-    padding: 0,
   },
-  heightDivider: {
-    height: "65%",
-  },
-  childContainer: {
-    flex: 1,
+  topContainer: {
+    flex: 2,
     justifyContent: "center",
     backgroundColor: "#ecf0f1",
     padding: 8,
     flexDirection: "row",
+    
   },
   checkContainer: {
     flex: 1,
@@ -120,11 +122,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ecf0f1",
     padding: 2,
   },
-  jokeLength: {
+  bottomContainer: {
     flex: 1,
-    width: "70%",
-    alignSelf: "center",
-  
   },
   card: {
     padding: 8,

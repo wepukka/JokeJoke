@@ -1,12 +1,3 @@
-
-import pun from "./Pun.png"
-import christmas from "./Christmas.png"
-import dark from "./Dark.png"
-import programming from "./Programming.png"
-import spooky from "./Spooky.png"
-import miscellaneous from "./Miscellaneous.png"
-
-// FOR FETCH
 export const flagsData = [ 
     { id: 1, text: "Nsfw", isChecked: false },
     { id: 2, text: "Religious", isChecked: false },

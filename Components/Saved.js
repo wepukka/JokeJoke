@@ -5,10 +5,10 @@ import dark from "./Data/Dark.png"
 import programming from "./Data/Programming.png"
 import spooky from "./Data/Spooky.png"
 import miscellaneous from "./Data/Miscellaneous.png"
-
+import CustomButton from './Buttons'
 
 import * as SQLite from 'expo-sqlite'
-import { StyleSheet, Text, View , FlatList, Image, Button} from 'react-native';
+import { StyleSheet, Text, View , FlatList, Image} from 'react-native';
 
 // SQLITE UPDATES RENDER  ONLY WHEN RESTARTING PROGRAM // 
 export default function Saved({navigation}) {
@@ -61,7 +61,7 @@ export default function Saved({navigation}) {
        <View style={styles.list}>
         <Text style={{fontSize:20, color:"black", flex:1}} onPress={() => 
           navigation.navigate('Selected', {joke: item})}>  { item.joke.split(" ").slice(0,2).join(" ")}</Text>
-        <Button  title="DELETE" onPress={() => deleteItem(item.id)}>{"DELETE"}{"\n"} </Button>
+        <CustomButton title={"DELETE"} onPress={() => deleteItem(item.id)}>{"DELETE"}{"\n"} </CustomButton>
         {/*Images[0] == imageid 1 */ }
         <Image style={styles.images} source={images[(item.imageid)-1].image}></Image>
         </View>}

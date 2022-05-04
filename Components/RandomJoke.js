@@ -1,54 +1,31 @@
 import React, { useRef, useEffect } from "react";
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import BottomSheet from "react-native-gesture-bottom-sheet";
-import * as SQLite from 'expo-sqlite'
+import * as SQLite from "expo-sqlite";
 
 // Components & Data
 import UrlChange from "./UrlChange";
 import CheckBoxes from "./CheckBoxes";
 import renderRandom from "./RenderJoke";
+import CustomButtom from "./Buttons";
 import { flagsData, categoriesData, lengthData } from "./Data/JokeData";
 
 export default function RandomJoke() {
-
   // SAVE JOKE TO DB
-  const db = SQLite.openDatabase('jokes.db')
-
-  const savejoke = () => {
-    let imageId;
-    categoriesData.map((category) => {
-      if(category.text == joke.category) {
-        imageId = category.id
-      }
-    })
-    console.log(joke.category)
-    let tempJoke;
-    
-    if(joke.type == "single") { 
-      tempJoke = joke.joke
-    }
-    else {
-      tempJoke = joke.setup + "\n\n" +  joke.delivery
-    }
-    setSaveStatus("SAVED")
-    db.transaction(tx => {
-      tx.executeSql('insert into jokes (joke, category, type, imageid) values (?,?,?,?);',
-      [tempJoke,joke.category,joke.type, imageId], );
-    }, null)
-  }
-
+  const db = SQLite.openDatabase("jokes.db");
+  const [url, setUrl] = useState("https://v2.jokeapi.dev/joke/Any");
   const [joke, setJoke] = useState({});
   const [categories, setCategories] = useState(categoriesData);
   const [flags, setFlags] = useState(flagsData);
   const [length, setLength] = useState(lengthData);
-  const [saveStatus, setSaveStatus] = useState("")
+  const [saveStatus, setSaveStatus] = useState("");
 
   // bottomsheet location value
   const bottomSheet = useRef();
 
-// bottomSheet for fetch settings
+  // bottomSheet for fetch settings
   const SetupSheet = () => {
     return (
       <BottomSheet hasDraggableIcon ref={bottomSheet} height={600}>
@@ -62,33 +39,45 @@ export default function RandomJoke() {
     );
   };
 
-   // save data, close sheet
-   const saveJokeData = (categories, flags, length) => {
+  // save data, close sheet
+  const saveJokeData = (categories, flags, length) => {
     setCategories(categories);
     setFlags(flags);
     setLength(length);
-
     bottomSheet.current.close();
   };
 
-  // Prolly get rid of
-  const renderCategoryType = () => {
-    if (joke.category == undefined ) {
-      return (
-        <View>
-          <Text style={{fontSize:15}}> {"Category:" +  "?"}</Text>
-        </View>
-      );
+  const saveJoke = () => {
+    if (Object.keys(joke).length == 0) {
+      console.log("NO JOKE TO SAVE");
+    } else {
+      sqlSave();
     }
-    return (
-      <View>
-        <Text style={{fontSize:16}}> {"Category: " + joke.category}</Text>
-      </View>
-    );
   };
 
-  // Default url
-  const [url, setUrl] = useState("https://v2.jokeapi.dev/joke/Any");
+  const sqlSave = () => {
+    let imageId;
+    categoriesData.map((category) => {
+      if (category.text == joke.category) {
+        imageId = category.id;
+      }
+    });
+    console.log(joke.category);
+    let tempJoke;
+
+    if (joke.type == "single") {
+      tempJoke = joke.joke;
+    } else {
+      tempJoke = joke.setup + "\n\n" + joke.delivery;
+    }
+    setSaveStatus("SAVED");
+    db.transaction((tx) => {
+      tx.executeSql(
+        "insert into jokes (joke, category, type, imageid) values (?,?,?,?);",
+        [tempJoke, joke.category, joke.type, imageId]
+      );
+    }, null);
+  };
 
   // Change url if categories CATEGORIES, FLAGS or LENGTH changes
   useEffect(() => {
@@ -101,8 +90,7 @@ export default function RandomJoke() {
       let response = await fetch(url);
       let data = await response.json();
       setJoke(data);
-    
-      setSaveStatus("")
+      setSaveStatus("");
     } catch (error) {
       console.log(error);
     }
@@ -111,22 +99,37 @@ export default function RandomJoke() {
   return (
     <View style={styles.container}>
       <View style={styles.jokeInfo}>
-        <View style={styles.info}>
-          <Text>{saveStatus}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", flex: 2 }}>
+            <Text style={{ fontSize: 19 }}>Category</Text>
+            <Text style={{ fontSize: 15, marginLeft: 20 }}>
+              {joke.category}
+            </Text>
+          </View>
+
+          <View style={{ flex: 0.8 }}>
+            <Text style={{ fontSize: 20 }}>{saveStatus}</Text>
+          </View>
         </View>
-        <View style={styles.jokeData}>{renderCategoryType()}</View>
       </View>
       <View style={styles.jokeContainer}>{renderRandom(joke.type, joke)}</View>
       <View style={styles.upperButtonStyle}>
-        <Button title="Joke" onPress={fetchRandomJoke} />
+        <CustomButtom title={"JOKE"} onPress={() => fetchRandomJoke()} />
       </View>
-
-      <View style={{ flexDirection: "row" }}>
+      <View style={styles.lowerButtonContainer}>
         <View style={styles.lowerButtonStyle}>
-          <Button title="Settings" onPress={() => bottomSheet.current.show()} />
+          <CustomButtom
+            title={"SETTINGS"}
+            onPress={() => bottomSheet.current.show()}
+          />
         </View>
         <View style={styles.lowerButtonStyle}>
-          <Button title="Save Joke" onPress={() => {savejoke()} } />
+          <CustomButtom
+            title={"SAVE"}
+            onPress={() => {
+              saveJoke();
+            }}
+          />
         </View>
       </View>
       <SetupSheet />
@@ -144,30 +147,36 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   jokeInfo: {
-    padding: 8,
-    flexDirection: "row",
-    width: "80%",
-  },
-  jokeData: { flex: 1 },
-  info: {
     flex: 1,
+    padding: 0,
+    width: "80%",
+    justifyContent: "center",
+    flexDirection: "column",
   },
   jokeContainer: {
+    flex: 3,
     alignItems: "center",
     justifyContent: "center",
     width: "90%",
-    height: "55%",
     marginBottom: 10,
     marginTop: 10,
+    backgroundColor: "transparent",
+    elevation: 5,
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    marginBottom: 20,
   },
   upperButtonStyle: {
-    flexDirection: "column",
     marginBottom: 30,
-    width: "30%",
-    backgroundColor: "grey",
+    width: "25%",
+  },
+  lowerButtonContainer: {
+    flex: 1,
+    flexDirection: "row",
   },
   lowerButtonStyle: {
-    marginLeft: 20,
-    width: "30%",
+    marginLeft: 10,
+    marginRight: 10,
+    width: "25%",
   },
 });
