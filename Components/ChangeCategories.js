@@ -7,7 +7,6 @@ import { useState } from "react";
 export default function ChangeCategories() {
   
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
-  
   return (
 <View>
 <CheckBox

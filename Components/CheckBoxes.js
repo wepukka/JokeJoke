@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, FlatList, Button } from "react-native";
+import { Text, View, StyleSheet, FlatList } from "react-native";
 import Checkbox from "expo-checkbox";
 import { Card } from "react-native-paper";
 import CustomButton from "./Buttons";
+import Ionicons from "@expo/vector-icons/Ionicons"
 
 // Props data for all rendered flatlist and save function
 export default function CheckBoxes(props) {
@@ -94,7 +95,7 @@ export default function CheckBoxes(props) {
         {renderFlatList(data3, "data3")}
         </View>
         <View style={{flex: 1, marginTop: 25, padding: 30}}>
-          <CustomButton title="OK" onPress={() => props.sendData(data1, data2, data3) } /> 
+          <CustomButton title={<Ionicons name="checkbox-outline" size={20} color={"white"} /> } onPress={() => props.sendData(data1, data2, data3) } /> 
           </View>
         </View>
       </View>

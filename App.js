@@ -1,8 +1,7 @@
 
 import React, {useEffect} from 'react';
-
+import Ionicons from "@expo/vector-icons/Ionicons"
 import { NavigationContainer} from '@react-navigation/native';
-
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from'@react-navigation/bottom-tabs';
 import * as SQLite from 'expo-sqlite'
@@ -28,8 +27,23 @@ export default function App() {
   }, []);
 
   const TabNav = () => { return ( <Tab.Navigator
-  
-    screenOptions={{
+    
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+
+        if (route.name === 'RandomJoke') {
+          iconName = focused
+            ? 'happy'
+            : 'happy-outline';
+        } if (route.name === 'Saved') {
+          iconName = focused ? 'save' : 'save-outline';
+        }
+        if (route.name === 'Create') {
+          iconName = focused ? 'add-circle' : 'add-circle-outline';
+        }
+        return <Ionicons name={iconName} size={size} color={color} />;
+      },
       tabBarShowLabel:false,
       tabBarInactiveBackgroundColor:`whitesmoke`,
       tabBarActiveBackgroundColor:`#b8860b`,
@@ -41,9 +55,10 @@ export default function App() {
       headerTitleStyle: {
         fontWeight: 'bold',
       },
-    }}>
+    })}
+  >
   <Tab.Screen name="RandomJoke" component={RandomJoke}/>
-  <Tab.Screen name="Your jokes" component={Saved} />
+  <Tab.Screen name="Saved" component={Saved} />
   <Tab.Screen name="Create" component={CreateJoke} />
   </Tab.Navigator>
   )
@@ -51,9 +66,8 @@ export default function App() {
  
   return (
     <NavigationContainer>
-     
+
       <Stack.Navigator screenOptions={{
-         
         headerStyle: {
           backgroundColor: `#b8860b`,
         },

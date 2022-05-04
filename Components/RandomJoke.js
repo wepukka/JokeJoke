@@ -4,16 +4,17 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import BottomSheet from "react-native-gesture-bottom-sheet";
 import * as SQLite from "expo-sqlite";
-
+import globalStyles from "./GlobalStyles";
 // Components & Data
 import UrlChange from "./UrlChange";
 import CheckBoxes from "./CheckBoxes";
-import renderRandom from "./RenderJoke";
-import CustomButtom from "./Buttons";
+import CustomButton from "./Buttons";
 import { flagsData, categoriesData, lengthData } from "./Data/JokeData";
+import Divider from "./Divider";
+import RenderJoke from "./RenderJoke";
 
 export default function RandomJoke() {
-  // SAVE JOKE TO DB
+ 
   const db = SQLite.openDatabase("jokes.db");
   const [url, setUrl] = useState("https://v2.jokeapi.dev/joke/Any");
   const [joke, setJoke] = useState({});
@@ -47,13 +48,15 @@ export default function RandomJoke() {
     bottomSheet.current.close();
   };
 
+
   const saveJoke = () => {
-    if (Object.keys(joke).length == 0) {
-      console.log("NO JOKE TO SAVE");
+    if (Object.keys(joke).length == 0 || joke.message != undefined)  {
+      setSaveStatus("NO JOKE")
     } else {
       sqlSave();
     }
   };
+
 
   const sqlSave = () => {
     let imageId;
@@ -79,11 +82,13 @@ export default function RandomJoke() {
     }, null);
   };
 
+
   // Change url if categories CATEGORIES, FLAGS or LENGTH changes
   useEffect(() => {
     let newUrl = UrlChange(categories, flags, length);
     setUrl(newUrl);
   }, [categories, flags, length]);
+
 
   const fetchRandomJoke = async () => {
     try {
@@ -96,6 +101,7 @@ export default function RandomJoke() {
     }
   };
 
+
   return (
     <View style={styles.container}>
       <View style={styles.jokeInfo}>
@@ -106,25 +112,25 @@ export default function RandomJoke() {
               {joke.category}
             </Text>
           </View>
-
           <View style={{ flex: 0.8 }}>
-            <Text style={{ fontSize: 20 }}>{saveStatus}</Text>
+            <Text></Text>
           </View>
         </View>
       </View>
-      <View style={styles.jokeContainer}>{renderRandom(joke.type, joke)}</View>
+      <Divider text={saveStatus} size={20} /> 
+      <View style={globalStyles.jokeContainer}>{RenderJoke(joke.type, joke)}</View>
       <View style={styles.upperButtonStyle}>
-        <CustomButtom title={"JOKE"} onPress={() => fetchRandomJoke()} />
+        <CustomButton title={"JOKE"} onPress={() => fetchRandomJoke()} />
       </View>
       <View style={styles.lowerButtonContainer}>
         <View style={styles.lowerButtonStyle}>
-          <CustomButtom
+          <CustomButton
             title={"SETTINGS"}
             onPress={() => bottomSheet.current.show()}
           />
         </View>
         <View style={styles.lowerButtonStyle}>
-          <CustomButtom
+          <CustomButton
             title={"SAVE"}
             onPress={() => {
               saveJoke();
@@ -152,19 +158,6 @@ const styles = StyleSheet.create({
     width: "80%",
     justifyContent: "center",
     flexDirection: "column",
-  },
-  jokeContainer: {
-    flex: 3,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "90%",
-    marginBottom: 10,
-    marginTop: 10,
-    backgroundColor: "transparent",
-    elevation: 5,
-    borderRadius: 5,
-    paddingHorizontal: 20,
-    marginBottom: 20,
   },
   upperButtonStyle: {
     marginBottom: 30,

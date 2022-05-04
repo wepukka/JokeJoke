@@ -1,28 +1,47 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Divider from "./Divider";
+import globalStyles from "./GlobalStyles";
+
+const JokeInfo = (props) => {
+  return (
+    <Text style={styles.infoText}>
+      {props.text}
+    </Text>
+  )
+};
 
 export default function SelectedJoke({ route }) {
+
   const { joke } = route.params;
 
   return (
     <View style={styles.container}>
+      <Divider text={"INFO"} size={20}/> 
       <View style={styles.infoContainer}>
         <View style={{flexDirection:"row"}}>
-        <View>
-        <Text>Joke ID</Text>
+        <View style={{flex: 1,}}>
+        <JokeInfo text={"ID"}/>
+        <JokeInfo text={"Category"}/>
+        <JokeInfo text={"Type"}/>
         </View>
-        <View>
-        <Text>{joke.id}</Text>
+        <View style={{flex: 1}}>
+        <JokeInfo text={joke.id}/>
+        <JokeInfo text={joke.category}/>
+        <JokeInfo text={joke.type}/>
         </View>
       </View>
-        <Text>{joke.category}</Text>
-        <Text>{joke.type}</Text>
+      <Divider text={"JOKE"} size={20}/> 
       </View>
-
-      <View style={styles.jokeContainer}>
-      <Text>{joke.joke}</Text>
+      <View style={globalStyles.jokeContainer}>
+      <Text style={{fontSize: 20}}>{joke.joke}</Text>
+      </View>
+      <Divider text={""}/> 
+      <View style={{flex: 2, justifyContent:"flex-start"}}>
+      <Text style={{fontSize: 25}}></Text>
       </View>
     </View>
+    
   );
 }
 
@@ -34,15 +53,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   infoContainer:{
-    flex: 1,
-    backgroundColor:"grey",
+    flex: 2,
     alignItems:"center",
     justifyContent:"center",
+    flexDirection:"column"
   },
   jokeContainer: {
     flex: 2,
-    backgroundColor:"whitesmoke",
-    alignItems:"center",
-    justifyContent:"center",
+    justifyContent:"flex-start",
+    paddingHorizontal: 40,
+    paddingVertical: 15,
   },
+  infoText:{
+    fontSize: 18,
+    marginBottom: 10,
+    alignSelf:"center",
+  }
 });

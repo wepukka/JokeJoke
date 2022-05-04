@@ -14,7 +14,6 @@ import { StyleSheet, Text, View , FlatList, Image} from 'react-native';
 export default function Saved({navigation}) {
   const db = SQLite.openDatabase('jokes.db')
 
-  
   const images = [
     { id : 1, text: "Programming", image: programming},
     { id : 2, text: "Misc", image: miscellaneous},
@@ -25,9 +24,7 @@ export default function Saved({navigation}) {
   ]
 
   const [joke, setJoke] = useState(joke)
-
- 
-
+  
   useEffect(() => {
     // useEffect triggers when component activates
     const unsubscribe = navigation.addListener('focus', () => {
@@ -60,9 +57,13 @@ export default function Saved({navigation}) {
         renderItem={({item}) => 
        <View style={styles.list}>
         <Text style={{fontSize:20, color:"black", flex:1}} onPress={() => 
-          navigation.navigate('Selected', {joke: item})}>  { item.joke.split(" ").slice(0,2).join(" ")}</Text>
+          navigation.navigate('Selected', {joke: item})}> { 
+            item.joke
+          .split(" ")
+          .slice(0,2)
+          .join(" ")
+          }</Text>
         <CustomButton title={"DELETE"} onPress={() => deleteItem(item.id)}>{"DELETE"}{"\n"} </CustomButton>
-        {/*Images[0] == imageid 1 */ }
         <Image style={styles.images} source={images[(item.imageid)-1].image}></Image>
         </View>}
         />  
