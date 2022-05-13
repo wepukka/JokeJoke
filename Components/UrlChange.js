@@ -1,30 +1,31 @@
 export default function UrlChange (categories,flags,length) {
 
-  let flagList = [];
-  let flagUrl = "";
 
-  let lengthUrl = "";
-  
   const mapCategories = () => {
 
-  let categoryList = [];
-  let categoryUrl = "";
-
-  // CATEGORIES
-  categories.map((data) => {
-    if (data.isChecked == true) {
-      categoryList.push(data.text);
+    let categoryList = [];
+    let categoryUrl = "";
+  
+    // CATEGORIES
+    categories.map((data) => {
+      if (data.isChecked == true) {
+        categoryList.push(data.text);
+      }
+    });
+  
+    if (categoryList.length > 0) {
+      categoryUrl = categoryList.join(",");
+    } else {
+      categoryUrl = "Any";
     }
-  });
-
-  if (categoryList.length > 0) {
-    categoryUrl = categoryList.join(",");
-  } else {
-    categoryUrl = "Any";
+    return categoryUrl
   }
-  return categoryUrl
-}
 
+
+  let flagList = [];
+  let flagUrl = "";
+  let lengthUrl = "";
+  
   // FLAGS
   flags.map((data) => {
     if (data.isChecked == true) {

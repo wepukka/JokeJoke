@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-export default function CreateJoke({navigation}) {
+export default function CreateJokePage({navigation}) {
     return (
         <View style={styles.container}>
             <Text>DEV</Text>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, StyleSheet, Pressable } from 'react-native';
 
 
-export default function CustomButton(props) {
+const CustomButton = (props) => {
     const {onPress, title} = props; 
     return (
         <Pressable onPress={onPress} style={({ pressed }) => [
@@ -35,3 +35,5 @@ const styles = StyleSheet.create({
         color: 'white',
       },
     });
+    
+    export default CustomButton;

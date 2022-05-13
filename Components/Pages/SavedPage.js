@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react'
-import pun from "./Data/Pun.png"
-import christmas from "./Data/Christmas.png"
-import dark from "./Data/Dark.png"
-import programming from "./Data/Programming.png"
-import spooky from "./Data/Spooky.png"
-import miscellaneous from "./Data/Miscellaneous.png"
-import CustomButton from './Buttons'
+import pun from "../Data/Pun.png"
+import christmas from "../Data/Christmas.png"
+import dark from "../Data/Dark.png"
+import programming from "../Data/Programming.png"
+import spooky from "../Data/Spooky.png"
+import miscellaneous from "../Data/Miscellaneous.png"
+import CustomButton from '../Buttons'
 
 import * as SQLite from 'expo-sqlite'
 import { StyleSheet, Text, View , FlatList, Image} from 'react-native';
 
 // SQLITE UPDATES RENDER  ONLY WHEN RESTARTING PROGRAM // 
-export default function Saved({navigation}) {
+export default function SavedPage({navigation}) {
   const db = SQLite.openDatabase('jokes.db')
 
   const images = [

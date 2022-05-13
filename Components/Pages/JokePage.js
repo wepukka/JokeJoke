@@ -4,16 +4,16 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import BottomSheet from "react-native-gesture-bottom-sheet";
 import * as SQLite from "expo-sqlite";
-import globalStyles from "./GlobalStyles";
+import globalStyles from "../GlobalStyles"
 // Components & Data
-import UrlChange from "./UrlChange";
-import CheckBoxes from "./CheckBoxes";
-import CustomButton from "./Buttons";
-import { flagsData, categoriesData, lengthData } from "./Data/JokeData";
-import Divider from "./Divider";
-import RenderJoke from "./RenderJoke";
+import UrlChange from "../UrlChange";
+import CheckBoxes from "../CheckBoxes";
+import CustomButton from "../Buttons";
+import { flagsData, categoriesData, lengthData } from "../Data/JokeData";
+import Divider from "../Divider";
+import RenderJoke from "../RenderJoke";
 
-export default function RandomJoke() {
+export default function JokePage() {
  
   const db = SQLite.openDatabase("jokes.db");
   const [url, setUrl] = useState("https://v2.jokeapi.dev/joke/Any");
@@ -56,7 +56,6 @@ export default function RandomJoke() {
       sqlSave();
     }
   };
-
 
   const sqlSave = () => {
     let imageId;

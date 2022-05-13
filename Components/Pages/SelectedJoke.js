@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Divider from "./Divider";
-import globalStyles from "./GlobalStyles";
+import Divider from "../Divider"
+import globalStyles from "../GlobalStyles";
 
 const JokeInfo = (props) => {
   return (

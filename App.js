@@ -7,10 +7,11 @@ import { createBottomTabNavigator } from'@react-navigation/bottom-tabs';
 import * as SQLite from 'expo-sqlite'
 
 // Components 
-import Saved from './Components/Saved';
-import RandomJoke from './Components/RandomJoke';
-import CreateJoke from './Components/CreateJoke';
-import SelectedJoke from "./Components/SelectedJoke"
+
+import JokePage from './Components/Pages/JokePage';
+import CreateJokePage from './Components/Pages/CreateJokePage';
+import SelectedJoke from "./Components/Pages/SelectedJoke"
+import SavedPage from './Components/Pages/SavedPage';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -57,9 +58,9 @@ export default function App() {
       },
     })}
   >
-  <Tab.Screen name="RandomJoke" component={RandomJoke}/>
-  <Tab.Screen name="Saved" component={Saved} />
-  <Tab.Screen name="Create" component={CreateJoke} />
+  <Tab.Screen name="RandomJoke" component={JokePage}/>
+  <Tab.Screen name="Saved" component={SavedPage} />
+  <Tab.Screen name="Create" component={CreateJokePage} />
   </Tab.Navigator>
   )
   }
