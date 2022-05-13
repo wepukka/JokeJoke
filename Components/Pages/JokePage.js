@@ -95,6 +95,7 @@ export default function JokePage() {
       let data = await response.json();
       setJoke(data);
       setSaveStatus("");
+      console.log(url)
     } catch (error) {
       console.log(error);
     }
