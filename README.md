@@ -2,9 +2,7 @@
 Expo built React Native application where u can fetch jokes, save to sql database on your mobile device and send new joke requests to [JokeApi](https://sv443.net/jokeapi/v2/)
 
 # Pages
-<img src="assets/FetchJoke.png" alt="listing" width="150"/>
-<img src="assets/JokeJokeSettings.png" alt="settings" width="150"/> 
-<img src="assets/JokeJokeListing.png" alt="listing" width="150"/>
+<img src="assets/FetchJoke.png" alt="listing" width="150"/><img src="assets/JokeJokeSettings.png" alt="settings" width="150"/> <img src="assets/JokeJokeListing.png" alt="listing" width="150"/>
 
 ----
 # API
