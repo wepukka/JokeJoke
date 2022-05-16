@@ -1,11 +1,13 @@
 import React, { useRef, useEffect } from "react";
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import BottomSheet from "react-native-gesture-bottom-sheet";
 import * as SQLite from "expo-sqlite";
-import globalStyles from "../GlobalStyles"
+
+
 // Components & Data
+import globalStyles from "../GlobalStyles";
 import UrlChange from "../UrlChange";
 import CheckBoxes from "../CheckBoxes";
 import CustomButton from "../Buttons";
@@ -14,7 +16,6 @@ import Divider from "../Divider";
 import RenderJoke from "../RenderJoke";
 
 export default function JokePage() {
- 
   const db = SQLite.openDatabase("jokes.db");
   const [url, setUrl] = useState("https://v2.jokeapi.dev/joke/Any");
   const [joke, setJoke] = useState({});
@@ -48,10 +49,9 @@ export default function JokePage() {
     bottomSheet.current.close();
   };
 
-
   const saveJoke = () => {
-    if (Object.keys(joke).length == 0 || joke.message != undefined)  {
-      setSaveStatus("NO JOKE")
+    if (Object.keys(joke).length == 0 || joke.message != undefined) {
+      setSaveStatus("NO JOKE");
     } else {
       sqlSave();
     }
@@ -81,13 +81,11 @@ export default function JokePage() {
     }, null);
   };
 
-
   // Change url if categories CATEGORIES, FLAGS or LENGTH changes
   useEffect(() => {
     let newUrl = UrlChange(categories, flags, length);
     setUrl(newUrl);
   }, [categories, flags, length]);
-
 
   const fetchRandomJoke = async () => {
     try {
@@ -95,12 +93,11 @@ export default function JokePage() {
       let data = await response.json();
       setJoke(data);
       setSaveStatus("");
-      console.log(url)
+      console.log(url);
     } catch (error) {
       console.log(error);
     }
   };
-
 
   return (
     <View style={styles.container}>
@@ -117,8 +114,10 @@ export default function JokePage() {
           </View>
         </View>
       </View>
-      <Divider text={saveStatus} size={20} /> 
-      <View style={globalStyles.jokeContainer}>{RenderJoke(joke.type, joke)}</View>
+      <Divider text={saveStatus} size={20} />
+      <View style={globalStyles.jokeContainer}>
+        <RenderJoke joke={joke}  /> 
+      </View>
       <View style={styles.upperButtonStyle}>
         <CustomButton title={"JOKE"} onPress={() => fetchRandomJoke()} />
       </View>
@@ -150,26 +149,27 @@ const styles = StyleSheet.create({
     backgroundColor: `#deb887`,
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "column",
+    flexDirection: "column"
   },
   jokeInfo: {
     flex: 1,
     padding: 0,
     width: "80%",
     justifyContent: "center",
-    flexDirection: "column",
+    flexDirection: "column"
   },
   upperButtonStyle: {
     marginBottom: 30,
-    width: "25%",
+    width: "25%"
   },
   lowerButtonContainer: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "row"
   },
   lowerButtonStyle: {
     marginLeft: 10,
     marginRight: 10,
-    width: "25%",
+    width: "25%"
   },
+
 });

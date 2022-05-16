@@ -14,7 +14,7 @@ export default function FlagListSelection(props) {
       }
       return data;
     });
-    setData(temp)
+    setData(temp);
   };
 
   //
@@ -28,16 +28,14 @@ export default function FlagListSelection(props) {
               onPress={() => {
                 handleChange(item.id, renderData);
               }}
-              style={{ margin: 3 }}
-            >
+              style={{ margin: 3 }}>
               <View style={styles.card}>
                 <View
                   style={{
                     flexDirection: "row",
                     flex: 1,
-                    justifyContent: "space-between",
-                  }}
-                >
+                    justifyContent: "space-between"
+                  }}>
                   <Checkbox value={item.isChecked} color="purple" />
                   <Text>{item.text}</Text>
                 </View>
@@ -51,10 +49,10 @@ export default function FlagListSelection(props) {
 
   return (
     <View style={styles.container}>
-          <View style={{ flex: 3, top:"5%" }}>{renderFlatList(data)}</View>
-          <View style={{flex:1, width:"40%", alignSelf:"center"}}>
-          <CustomButton title="save" onPress={() => props.sendData(data)}/> 
-          </View>
+      <View style={{ flex: 3, top: "5%" }}>{renderFlatList(data)}</View>
+      <View style={{ flex: 1, width: "40%", alignSelf: "center" }}>
+        <CustomButton title="save" onPress={() => props.sendData(data)} />
+      </View>
     </View>
   );
 }
@@ -62,10 +60,10 @@ export default function FlagListSelection(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ecf0f1",
+    backgroundColor: "#ecf0f1"
   },
   card: {
     padding: 8,
-    margin: 5,
-  },
+    margin: 5
+  }
 });

@@ -41,16 +41,14 @@ export default function CheckBoxes(props) {
               onPress={() => {
                 handleChange(item.id, renderData, type);
               }}
-              style={{ margin: 3 }}
-            >
+              style={{ margin: 3 }}>
               <View style={styles.card}>
                 <View
                   style={{
                     flexDirection: "row",
                     flex: 1,
-                    justifyContent: "space-between",
-                  }}
-                >
+                    justifyContent: "space-between"
+                  }}>
                   <Checkbox value={item.isChecked} color="purple" />
                   <Text>{item.text}</Text>
                 </View>
@@ -72,9 +70,8 @@ export default function CheckBoxes(props) {
               alignSelf: "center",
               marginBottom: 10,
               marginTop: 0,
-              fontSize: 15,
-            }}
-          >
+              fontSize: 15
+            }}>
             Categories
           </Text>
           <View style={{ flex: 1 }}>{renderFlatList(data1, "data1")}</View>
@@ -85,9 +82,8 @@ export default function CheckBoxes(props) {
               alignSelf: "center",
               marginBottom: 10,
               marginTop: 0,
-              fontSize: 15,
-            }}
-          >
+              fontSize: 15
+            }}>
             Blacklist
           </Text>
           <View style={{ flex: 1 }}>{renderFlatList(data2, "data2")}</View>
@@ -97,8 +93,7 @@ export default function CheckBoxes(props) {
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 2 }}>
             <Text
-              style={{ alignSelf: "center", marginBottom: 10, fontSize: 15 }}
-            >
+              style={{ alignSelf: "center", marginBottom: 10, fontSize: 15 }}>
               Length
             </Text>
             {renderFlatList(data3, "data3")}
@@ -120,27 +115,27 @@ export default function CheckBoxes(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ecf0f1",
+    backgroundColor: "#ecf0f1"
   },
   topContainer: {
     flex: 2,
     justifyContent: "center",
     backgroundColor: "#ecf0f1",
     padding: 8,
-    flexDirection: "row",
+    flexDirection: "row"
   },
   checkContainer: {
     flex: 1,
     justifyContent: "center",
     backgroundColor: "#ecf0f1",
-    padding: 2,
+    padding: 2
   },
   bottomContainer: {
     flex: 1,
-    padding: 10,
+    padding: 10
   },
   card: {
     padding: 8,
-    margin: 5,
-  },
+    margin: 5
+  }
 });

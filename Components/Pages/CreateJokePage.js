@@ -1,10 +1,11 @@
 import { React, useEffect, useState, useRef } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, Keyboard } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import CustomButton from "../Buttons";
 import { flagsData } from "../Data/JokeData";
 import BottomSheet from "react-native-gesture-bottom-sheet";
 import FlagListSelection from "../FlagListSelection";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function CreateJokePage() {
   const bottomSheet = useRef();
@@ -16,6 +17,7 @@ export default function CreateJokePage() {
   const [flags, setFlags] = useState(flagsData);
   const [apiResponse, setApiResponse] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   // Default json, where Joke or Setup & Delivery will be added
   const json = {
@@ -28,9 +30,9 @@ export default function CreateJokePage() {
       political: false,
       racist: false,
       sexist: false,
-      explicit: false,
+      explicit: false
     },
-    lang: "en",
+    lang: "en"
   };
 
   const categories = [
@@ -39,7 +41,7 @@ export default function CreateJokePage() {
     "Pun",
     "Spooky",
     "Christmas",
-    "Dark",
+    "Dark"
   ];
 
   // saveFlag as bottomsheet param
@@ -116,7 +118,7 @@ export default function CreateJokePage() {
       }}
     />
   );
-  
+
   // Switch json booleans
   const changeJsonFlags = () => {
     flags.map((flag) => {
@@ -144,7 +146,7 @@ export default function CreateJokePage() {
     fetch("https://v2.jokeapi.dev/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(json),
+      body: JSON.stringify(json)
     })
       .then((response) => response.json())
       .then((response) => {
@@ -158,51 +160,82 @@ export default function CreateJokePage() {
       });
   };
 
+  useEffect(() => { // Check if keyboard is enabled
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <View style={{ flex: 1, flexDirection: "row", paddingHorizontal: 50 }}>
-        <View style={{ flex: 1, marginTop: 30, marginRight: 30 }}>
-          <CustomButton title={type} onPress={() => handleTypeChange()} />
+    <KeyboardAwareScrollView
+      style={{ backgroundColor: "black" }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={false}>
+      {!isKeyboardVisible && (
+        <View style={{ flex: 1, flexDirection: "row", paddingHorizontal: 50 }}>
+          <View style={{ flex: 1, marginTop: 30, marginRight: 30 }}>
+            <CustomButton title={type} onPress={() => handleTypeChange()} />
+          </View>
+          <View style={{ flex: 1, marginTop: 30 }}>{categoryDropDown}</View>
         </View>
-        <View style={{ flex: 1, marginTop: 30 }}>{categoryDropDown}</View>
-      </View>
-      <View
-        style={{
-          flex: 0.5,
-          width: "30%",
-        }}
-      >
-        <CustomButton
-          title="Pick Flags"
-          onPress={() => bottomSheet.current.show()}
-        />
-      </View>
+      )}
+
+      {!isKeyboardVisible && (
+        <View
+          style={{
+            flex: 0.5,
+            width: "30%"
+          }}>
+          <CustomButton
+            title="Pick Flags"
+            onPress={() => bottomSheet.current.show()}
+          />
+        </View>
+      )}
+
       <View
         style={{
           flex: 2,
           marginTop: 20,
-          width: "80%",
-        }}
-      >
+          width: "80%"
+        }}>
         <Text style={{ alignSelf: "center", fontSize: 20, marginBottom: 10 }}>
           Write joke
         </Text>
         {inputForm}
       </View>
-      <View style={{ flex: 1, padding: 10 }}>
-        <Text>{apiResponse}</Text>
-      </View>
-      <View
-        style={{
-          flex: 1,
-          marginTop: 20,
-          width: "25%",
-        }}
-      >
-        <CustomButton title="Submit" onPress={() => handleSubmit()} />
-      </View>
+      {!isKeyboardVisible && (
+        <View style={{ flex: 1, padding: 10 }}>
+          <Text style={{fontSize: 15}}>{apiResponse}</Text>
+        </View>
+      )}
+      {!isKeyboardVisible && (
+        <View
+          style={{
+            flex: 1,
+            marginTop: 20,
+            width: "25%"
+          }}>
+          <CustomButton title="Submit" onPress={() => handleSubmit()} />
+        </View>
+      )}
       <FlagSheet />
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -211,7 +244,7 @@ const styles = StyleSheet.create({
     backgroundColor: `#deb887`,
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   input: {
     height: 40,
@@ -219,7 +252,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     width: "80%",
-    alignSelf: "center",
+    alignSelf: "center"
   },
   dropDownButton: {
     backgroundColor: "#4682b4",
@@ -227,13 +260,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 10,
     width: "100%",
-    height: 40,
+    height: 40
   },
   dropDownButtonText: {
     fontSize: 12,
     lineHeight: 20,
     fontWeight: "bold",
     letterSpacing: 1.25,
-    color: "white",
-  },
+    color: "white"
+  }
 });
