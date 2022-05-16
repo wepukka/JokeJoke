@@ -100,23 +100,19 @@ export default function CreateJokePage() {
     json.category = category;
     json.type = type;
 
-    if (type == "single") {
+    if (type == "single" & joke != "" & category != "") {
       json.joke = joke;
-    } else {
+      console.log(json)
+      console.log("Send single")
+    } else if (type == "twopart" & category != "" & setup != "" & delivery != "") {
       json.setup = setup;
       json.delivery = delivery;
-    }
-    console.log(json)
-    // SEND SINGLE
-    if (type == "single" & json.joke != "" & json.category != "") {
-        console.log("send single")
-    } 
-    // SEND TWOPART
-    else if (type == "twopart" & json.category != "" & json.setup != "" & json.delivery != "") {
-        console.log("send twopart")
+      console.log(json)
+      console.log("Send Twopart")
     }
     // ERROR
     else {
+        console.log(json)
         console.log("Check all is set")
     }
   };
