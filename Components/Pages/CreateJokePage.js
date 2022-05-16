@@ -4,7 +4,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import CustomButton from "../Buttons";
 import { flagsData } from "../Data/JokeData";
 import BottomSheet from "react-native-gesture-bottom-sheet";
-import FlagBoxes from "../CreateJokeBoxes";
+import FlagListSelection from "../FlagListSelection";
 
 export default function CreateJokePage() {
   const bottomSheet = useRef();
@@ -52,7 +52,7 @@ export default function CreateJokePage() {
   const FlagSheet = () => {
     return (
       <BottomSheet hasDraggableIcon ref={bottomSheet} height={500}>
-        <FlagBoxes data={flags} sendData={saveFlags} />
+        <FlagListSelection data={flags} sendData={saveFlags} />
       </BottomSheet>
     );
   };

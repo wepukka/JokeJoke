@@ -4,12 +4,9 @@ import Checkbox from "expo-checkbox";
 import { Card } from "react-native-paper";
 import CustomButton from "./Buttons";
 
-// Props data for all rendered flatlist and save function
-export default function FlagBoxes(props) {
+export default function FlagListSelection(props) {
   const [data, setData] = useState(props.data);
 
-
-  // Handle checkbox change, save to state
   const handleChange = (id, data) => {
     let temp = data.map((data) => {
       if (id === data.id) {
@@ -52,7 +49,6 @@ export default function FlagBoxes(props) {
     );
   };
 
-  // View with 3 flatlist elements //
   return (
     <View style={styles.container}>
           <View style={{ flex: 3, top:"5%" }}>{renderFlatList(data)}</View>
