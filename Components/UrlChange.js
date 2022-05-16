@@ -1,6 +1,5 @@
 export default function UrlChange (categories,flags,length) {
-
-
+  
   const mapCategories = () => {
 
     let categoryList = [];
