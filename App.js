@@ -8,10 +8,10 @@ import * as SQLite from 'expo-sqlite'
 
 // Components 
 
-import JokePage from './Components/Pages/JokePage';
-import CreateJokePage from './Components/Pages/CreateJokePage';
-import SelectedJoke from "./Components/Pages/SelectedJoke"
-import SavedPage from './Components/Pages/SavedPage';
+import JokePage from './Screens/JokePage';
+import CreateJokePage from './Screens/CreateJokePage';
+import SelectedJoke from "./Screens/SelectedJoke"
+import SavedPage from './Screens/SavedPage';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();

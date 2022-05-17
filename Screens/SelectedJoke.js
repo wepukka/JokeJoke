@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View, Share, ScrollView } from "react-native";
-import Divider from "../Divider";
-import globalStyles from "../GlobalStyles";
-import CustomButton from "../Buttons";
+import Divider from "../Components/Divider"
+import globalStyles from "../Components/GlobalStyles";
+import CustomButton from "../Components/Buttons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 const JokeInfo = (props) => {
@@ -12,10 +12,12 @@ const JokeInfo = (props) => {
 export default function SelectedJoke({ route }) {
   const { joke } = route.params;
 
+  const message = "Hello friend, heres joke for you!" +  "\n\n" + joke.joke + "\n\n" + "Shared with JokeJoke"
+
   const shareOptions = {
-    title: "Shared with JokeJoke",
-    message: joke.joke,
-    subject: "Hello friend!"
+    title: "",
+    message: message,
+    subject: ""
   };
 
   const ShareJoke = () => {

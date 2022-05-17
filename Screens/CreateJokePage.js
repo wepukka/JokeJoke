@@ -1,10 +1,10 @@
 import { React, useEffect, useState, useRef } from "react";
 import { StyleSheet, Text, View, TextInput, Keyboard } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
-import CustomButton from "../Buttons";
-import { flagsData } from "../Data/JokeData";
+import CustomButton from "../Components/Buttons"
+import { flagsData } from "../Components/Data/JokeData";
 import BottomSheet from "react-native-gesture-bottom-sheet";
-import FlagListSelection from "../FlagListSelection";
+import FlagListSelection from "../Components/FlagListSelection";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function CreateJokePage() {
@@ -16,7 +16,7 @@ export default function CreateJokePage() {
   const [category, setCategory] = useState("");
   const [flags, setFlags] = useState(flagsData);
   const [apiResponse, setApiResponse] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [jokeMsg, setJokeMsg] = useState("Joke")
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   // Default json, where Joke or Setup & Delivery will be added
@@ -64,10 +64,12 @@ export default function CreateJokePage() {
     if (type == "single") {
       setType("twopart");
       setJoke("");
+      setJokeMsg("Joke setup & Delivery")
     } else {
       setType("single");
       setSetup("");
       setDelivery("");
+      setJokeMsg("Joke")
     }
   };
 
@@ -215,19 +217,19 @@ export default function CreateJokePage() {
           width: "80%"
         }}>
         <Text style={{ alignSelf: "center", fontSize: 20, marginBottom: 10 }}>
-          Write joke
+          {jokeMsg}
         </Text>
         {inputForm}
       </View>
       {!isKeyboardVisible && (
-        <View style={{ flex: 1, padding: 10 }}>
+        <View style={{ flex: .5, padding: 10 }}>
           <Text style={{fontSize: 15}}>{apiResponse}</Text>
         </View>
       )}
       {!isKeyboardVisible && (
         <View
           style={{
-            flex: 1,
+            flex: .7,
             marginTop: 20,
             width: "25%"
           }}>

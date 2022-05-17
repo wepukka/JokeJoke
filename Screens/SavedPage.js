@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import pun from "../Data/Pun.png"
-import christmas from "../Data/Christmas.png"
-import dark from "../Data/Dark.png"
-import programming from "../Data/Programming.png"
-import spooky from "../Data/Spooky.png"
-import miscellaneous from "../Data/Miscellaneous.png"
-import CustomButton from '../Buttons'
+import pun from "../Components/Data/Pun.png"
+import christmas from "../Components/Data/Christmas.png"
+import dark from "../Components/Data/Dark.png"
+import programming from "../Components/Data/Programming.png"
+import spooky from "../Components/Data/Spooky.png"
+import miscellaneous from "../Components/Data/Miscellaneous.png"
+import CustomButton from "../Components/Buttons"
 
 import * as SQLite from 'expo-sqlite'
 import { StyleSheet, Text, View , FlatList, Image} from 'react-native';

@@ -11,7 +11,7 @@ const globalStyles = StyleSheet.create({
     backgroundColor: `#ffdab9`,
     elevation: 5,
     borderRadius: 5,
-    paddingHorizontal: 20,
+    paddingHorizontal: 40,
     paddingVertical: 20,
     marginBottom: 20,
   }

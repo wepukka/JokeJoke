@@ -5,15 +5,14 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import BottomSheet from "react-native-gesture-bottom-sheet";
 import * as SQLite from "expo-sqlite";
 
-
 // Components & Data
-import globalStyles from "../GlobalStyles";
-import UrlChange from "../UrlChange";
-import CheckBoxes from "../CheckBoxes";
-import CustomButton from "../Buttons";
-import { flagsData, categoriesData, lengthData } from "../Data/JokeData";
-import Divider from "../Divider";
-import RenderJoke from "../RenderJoke";
+import globalStyles from "../Components/GlobalStyles"
+import UrlChange from "../Components/UrlChange";
+import CheckBoxes from "../Components/CheckBoxes";
+import CustomButton from "../Components/Buttons";
+import { flagsData, categoriesData, lengthData } from "../Components/Data/JokeData"
+import Divider from "../Components/Divider"
+import RenderJoke from "../Components/RenderJoke";
 
 export default function JokePage() {
   const db = SQLite.openDatabase("jokes.db");
@@ -116,7 +115,7 @@ export default function JokePage() {
       </View>
       <Divider text={saveStatus} size={20} />
       <View style={globalStyles.jokeContainer}>
-        <RenderJoke joke={joke}  /> 
+        <RenderJoke joke={joke} />
       </View>
       <View style={styles.upperButtonStyle}>
         <CustomButton title={"JOKE"} onPress={() => fetchRandomJoke()} />
@@ -170,6 +169,5 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     width: "25%"
-  },
-
+  }
 });
