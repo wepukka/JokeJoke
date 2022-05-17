@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/JokeJoke.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.wepukka.joke_joke"
     },
     "web": {
       "favicon": "./assets/JokeJoke.png"
